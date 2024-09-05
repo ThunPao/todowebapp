@@ -35,9 +35,9 @@ export default async function TaskList({ fetchData }: TaskListProps) {
 
                         </TaskModalButton></div>
                         <div>
-                        <TaskDelBtn id={task.task_id}>
-                        <Icon className='text-error' icon="tabler:trash-filled" width="1.5em" height="1.5em" />
-                        </TaskDelBtn>
+                            <TaskDelBtn id={task.task_id}>
+                                <Icon className='text-error' icon="tabler:trash-filled" width="1.5em" height="1.5em" />
+                            </TaskDelBtn>
                         </div>
                     </div>
 
@@ -46,9 +46,7 @@ export default async function TaskList({ fetchData }: TaskListProps) {
 
         )
     })
-
     return <div>
-
         <TaskProvider>
             <TaskEditerModal />
             <div className="flex justify-between py-4">
