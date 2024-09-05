@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Tasks {
+  task_id     Int          @id @default(autoincrement())
+  user        Users?        @relation(fields: [user_id], references: [user_id])
+  user_id     Int?
+  title       String       @db.VarChar(255)
+  description String       @db.Text()
+  status      Taskstatus   @default(PENDING)
+  priority    Taskpriority @default(LOW)
+  due_date    DateTime     @db.Date()
+  created_at  DateTime     @default(now()) @db.Timestamp(0)
+  updated_at  DateTime     @updatedAt @db.Timestamp(0)
+  Comments    Comments[]
+  isChecked   Boolean      @default(false)
+}
+
+model Comments {
+  comment_id Int      @id @default(autoincrement())
+  task       Tasks    @relation(fields: [task_id], references: [task_id])
+  task_id    Int
+  comment    String   @db.Text()
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @updatedAt @db.Timestamp(0)
+}
+
+enum Taskstatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum Taskpriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model Users {
+  user_id    Int      @id @default(autoincrement())
+  username   String   @db.VarChar(50)
+  email      String   @db.VarChar(100)
+  password   String   @db.VarChar(255)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @updatedAt @db.Timestamp(0)
+  Tasks      Tasks[]
+}
