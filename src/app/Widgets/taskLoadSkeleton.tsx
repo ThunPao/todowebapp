@@ -2,7 +2,7 @@ export default function TaskLoadSkeletonPage() {
     const datas = [1, 2, 3, 4, 5, 6, 7, 8]
     const items = datas.map((task) => {
         return (
-            <div className="skeleton h-32"></div>
+            <div key={task} className="skeleton h-32"></div>
         )
     })
     return (
