@@ -1,8 +1,10 @@
 import { revalidatePath } from "next/cache";
 import { db } from "..";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 
-export function fetchTasks() {
+export const fetchTasks = cache(() => {
+    console.log("GETTING QUERY");
     return db.tasks.findMany(
         {
             select: {
@@ -14,8 +16,8 @@ export function fetchTasks() {
             }
         }
     );
-}
-export async function checkTask(taskid: number,isCheck:boolean) {
+});
+export async function checkTask(taskid: number, isCheck: boolean) {
     await db.tasks.update({
         select: {
             title: true,
