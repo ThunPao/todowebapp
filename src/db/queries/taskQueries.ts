@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 import { cache } from "react";
 
 export const fetchTasks = cache(() => {
-    console.log("GETTING QUERY");
     return db.tasks.findMany(
         {
             select: {
@@ -17,6 +16,20 @@ export const fetchTasks = cache(() => {
         }
     );
 });
+export async function fetchrawTasks() {
+    await new Promise(resolve=> setTimeout(resolve,2500))
+    return db.tasks.findMany(
+        {
+            select: {
+                task_id: true,
+                title: true,
+                description: true,
+                due_date: true,
+                isChecked: true,
+            }
+        }
+    );
+}
 export async function checkTask(taskid: number, isCheck: boolean) {
     await db.tasks.update({
         select: {
