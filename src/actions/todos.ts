@@ -1,6 +1,6 @@
 "use server"
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { CreateItemResult } from "./interfaces";
 import { redirect } from "next/navigation";
 import { db } from '@/db';
@@ -22,7 +22,9 @@ export async function editTodo(formState: CreateItemResult, formData: FormData):
                 due_date: dueDate,
             }
         })
-        revalidatePath(paths.home()) //เคลีย Cache
+        // revalidatePath(paths.home()) //เคลีย Cache
+        revalidateTag("tasks")
+
         return { success: true, data: updateData, errors: {} };
         // return { success: true, errors: {} };
     } catch (error) {
@@ -45,7 +47,8 @@ export async function addTodo(formState: CreateItemResult, formData: FormData): 
                 due_date: dueDate
             }
         })
-        revalidatePath(paths.home()) //เคลีย Cache
+        // revalidatePath(paths.home()) //เคลีย Cache
+        revalidateTag("tasks");
         return { success: true, data: updateData, errors: {} };
     } catch (error) {
         console.error(error)
@@ -59,9 +62,10 @@ export async function deleteTodo(formState: CreateItemResult, formData: FormData
         const deleteData = await db.tasks.delete({
             where: { task_id: id },
         })
-        revalidatePath(paths.home()) //เคลีย Cache
+        // revalidatePath(paths.home()) //เคลีย Cache
+        revalidateTag("tasks");
 
-        return { success: true,data: deleteData, errors: {} };
+        return { success: true, data: deleteData, errors: {} };
     } catch (error) {
         console.error(error)
         return { errors: { _form: ["Something went wrong"] } }

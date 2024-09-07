@@ -11,8 +11,9 @@ interface TaskProps {
 export function CheckTaskInputPage({ title, id, checkState }: TaskProps) {
     const [isChecked, setIsChecked] = useState(checkState);
     const [isDisabled, setIsDisabled] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const lastCallTimeRef = useRef<number>(0);
-    const cooldown = 1000; // คูลดาวน์ของ ปุ่ม checkbox
+    const cooldown = 300;
 
     useEffect(() => {
         setIsChecked(checkState);
@@ -22,13 +23,13 @@ export function CheckTaskInputPage({ title, id, checkState }: TaskProps) {
         const now = Date.now();
         const lastCallTime = lastCallTimeRef.current;
 
-
-            // เงื่อนไขถ้าติดคูลดาวน์
+        // คูลดาวน์ toggle 0.3 วิ
         if (now - lastCallTime < cooldown) {
             return;
         }
 
         setIsDisabled(true);
+        setIsLoading(true);
         lastCallTimeRef.current = now;
 
         const newCheckState = !isChecked;
@@ -43,12 +44,18 @@ export function CheckTaskInputPage({ title, id, checkState }: TaskProps) {
             console.error('Failed to update task:', error);
             setIsChecked(!newCheckState);
         } finally {
+            setIsLoading(false);
             setTimeout(() => setIsDisabled(false), cooldown);
         }
     };
 
     return (
         <>
+            <div className="flex items-center gap-2">
+
+        {isLoading ? (
+            <span className="loading loading-spinner loading-md"></span>
+        ) : (
             <input
                 type="checkbox"
                 onChange={handleChange}
@@ -56,7 +63,10 @@ export function CheckTaskInputPage({ title, id, checkState }: TaskProps) {
                 disabled={isDisabled}
                 className="checkbox"
             />
-            <div className={isChecked ? 'line-through' : ''}>
+            
+        )}
+        </div>
+        <div className={isChecked ? 'line-through' : ''}>
                 {title}
             </div>
         </>

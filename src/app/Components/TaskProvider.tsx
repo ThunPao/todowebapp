@@ -13,15 +13,18 @@ export const defaultTask: TaskColla = {
 type TaskContextType = {
   task: TaskColla;
   setTask: (task: TaskColla) => void;
+  isLoading: boolean;
+  setIsLoading: (loading: boolean) => void;
 };
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
 
 export const TaskProvider = ({ children }: { children: React.ReactNode }) => {
   const [task, setTask] = useState<TaskColla>(defaultTask);
+  const [isLoading, setIsLoading] = useState(false); // loading state
 
   return (
-      <TaskContext.Provider value={{ task, setTask }}>
+      <TaskContext.Provider value={{ task, setTask,isLoading,setIsLoading }}>
           {children}
       </TaskContext.Provider>
   );

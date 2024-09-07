@@ -2,7 +2,7 @@
 import * as actions from "@/actions";
 import { useFormState } from "react-dom";
 import { useTask } from '../TaskProvider';
-import { useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 
 
@@ -10,7 +10,8 @@ export default function TaskEditerModal() {
   const curDate = new Date().toISOString().split("T")[0];
   const formRef = useRef<HTMLFormElement>(null);
   const modalRef = useRef<HTMLDialogElement>(null);
-  const { task } = useTask();
+  const { task,isLoading,setIsLoading } = useTask();
+
 
   // formState เพิ่ม แก้ไข ลบ
   const [addState, addTodo] = useFormState(actions.addTodo, {
@@ -21,13 +22,15 @@ export default function TaskEditerModal() {
   });
   const [deleteState, deleteTodo] = useFormState(actions.deleteTodo, {
     errors: {},
+
   });
   const [initialTask, setInitialTask] = useState<any>(null);
 
   // อัปเดท task ให้ตรงตาม provider เพื่อให้ task คงค่า value ดั้งเดิม
   useEffect(() => {
     if (task) {
-      setInitialTask({ ...task });
+      setInitialTask({ ...task })
+      setIsLoading(false);
     }
   }, [task]);
   const curState = task.task_id ? editState : addState;
@@ -38,12 +41,30 @@ export default function TaskEditerModal() {
       modalRef.current.close();
     }
   };
+  const Loading = () => {
+    setIsLoading(true);
+  }
+  // Closed Modal ตอน action สำเร็จ
   useEffect(() => {
     if (formRef.current) {
-      // เคลีย form input data เพื่อให้ค่า defaultValue task จาก provider แทนที่
+      if (curState && curState.success) {
+        setIsLoading(false);
+      }
       formRef.current.reset();
+      closeModal();
     }
-  }, [task]);
+  }, [editState, addState]);
+
+
+  useEffect(() => {
+    if (formRef.current) {
+      if (deleteState && deleteState.success) {
+        setIsLoading(false);
+      }
+      closeModal();
+    }
+  }, [deleteState]);
+
   return (
     <>
       <dialog id="taskEditmodal" ref={modalRef} className="modal">
@@ -55,9 +76,12 @@ export default function TaskEditerModal() {
 
             <h3 className="font-bold text-lg">Task</h3>
             {task.task_id > 0 && (
-              <form action={deleteTodo}>
+              <form onSubmit={Loading} action={deleteTodo}>
                 <input name="id" type="hidden" defaultValue={task.task_id} />
-                <button formAction={deleteTodo} title="Delete" className="btn btn-error btn-outline btn-sm">
+                <button
+                  disabled={isLoading}
+
+                  formAction={deleteTodo} title="Delete" className="btn btn-error btn-outline btn-sm">
                   <Icon icon="tabler:trash-filled" width="1.5em" height="1.5em" />
                   ลบ {task.task_id}</button>
               </form>
@@ -71,7 +95,7 @@ export default function TaskEditerModal() {
             </div>
           ) : null}
           {/* Form Input */}
-          <form ref={formRef} onSubmit={closeModal} action={curAction} className="flex flex-col space-y-4">
+          <form ref={formRef} onSubmit={Loading} action={curAction} className="flex flex-col space-y-4">
             {/* Title */}
             <input name="id" type="hidden" defaultValue={task.task_id} />
             <label className="form-control">
@@ -80,7 +104,10 @@ export default function TaskEditerModal() {
                   Title <small className="text-red-500">*</small>
                 </span>
               </div>
-              <input name="title" type="text" defaultValue={task.title} placeholder="Task Title" required className="input input-bordered" />
+              <input
+                disabled={isLoading}
+
+                name="title" type="text" defaultValue={task.title} placeholder="Task Title" required className="input input-bordered" />
             </label>
             {/* Description */}
             <label className="form-control">
@@ -89,7 +116,10 @@ export default function TaskEditerModal() {
                   Description <small className="text-red-500">*</small>
                 </span>
               </div>
-              <textarea name="description" defaultValue={task.description} placeholder="Task Description" required className="input min-h-20 max-h-64 input-bordered" />
+              <textarea
+                disabled={isLoading}
+
+                name="description" defaultValue={task.description} placeholder="Task Description" required className="input min-h-20 max-h-64 input-bordered" />
             </label>
             {/* Due Date */}
             <label className="form-control">
@@ -99,20 +129,28 @@ export default function TaskEditerModal() {
                 </span>
               </div>
               <input
+                disabled={isLoading}
                 type="date"
                 name="dueDate"
                 min={curDate}
-                defaultValue={task.due_date.toISOString().slice(0, 10)}
+                defaultValue={new Date(task.due_date).toISOString().slice(0, 10)}
                 placeholder="Task Title"
                 required
                 className="input input-bordered w-full max-w-xs"
               />
             </label>
             <div className="py-4">
-           
-              <button onSubmit={closeModal} formAction={curAction} type="submit" title="" className="btn w-full btn-primary">
-                {task.task_id ? "Edit" : "Add"} Task
-              </button>
+              {isLoading ? (
+                <button className="btn w-full btn-primary">
+                  <span className="loading loading-spinner"></span>
+                  รอสักครู่
+                </button>
+              ) : (
+                <button onSubmit={closeModal} formAction={curAction} type="submit" title="" className="btn w-full btn-primary">
+                  {task.task_id ? "Edit" : "Add"} Task
+                </button>
+              )}
+
             </div>
           </form>
         </div>
