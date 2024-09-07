@@ -21,13 +21,12 @@ export default async function TaskList({ fetchData }: TaskListProps) {
     const items = datas.map((task) => {
         return (
             <div key={task.task_id}>
-                <TaskCardPage curTask={task}/>
+                <TaskCardPage curTask={task} />
             </div>
 
         )
     })
     return <div>
-        
         <TaskProvider>
             <TaskEditerModal />
             <div className="flex justify-between py-4">
@@ -41,12 +40,17 @@ export default async function TaskList({ fetchData }: TaskListProps) {
                     <div className="btn bg-primary text-white">Add Task</div>
                 </TaskModalButton>
             </div>
-            <div className='grid lg:grid-cols-3 xl:grid-cols-4 gap-4'>
-                {items}
+            <div className='grid lg:grid-cols-3 xl:grid-cols-4 gap-4 border-2 border-dashed p-3 rounded-lg'>
+                {items.length > 0 ? (
+                    <>
+                        {items}
+                    </>
+                ) : (
+                    "Currently no tasks"
+                )}
             </div>
-            <ToastContainer position="bottom-right"/>
+            <ToastContainer position="bottom-right" />
         </TaskProvider>
-
     </div>
 
 }

@@ -3,12 +3,11 @@ import { useState, useRef, useEffect } from 'react';
 import { toggleTask } from "@/actions";
 
 interface TaskProps {
-    title: string;
     id: number;
     checkState: boolean;
 }
 
-export function CheckTaskInputPage({ title, id, checkState }: TaskProps) {
+export function CheckTaskInputPage({ id, checkState }: TaskProps) {
     const [isChecked, setIsChecked] = useState(checkState);
     const [isDisabled, setIsDisabled] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -66,9 +65,6 @@ export function CheckTaskInputPage({ title, id, checkState }: TaskProps) {
             
         )}
         </div>
-        <div className={isChecked ? 'line-through' : ''}>
-                {title}
-            </div>
         </>
     );
 }

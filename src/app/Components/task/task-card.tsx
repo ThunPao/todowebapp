@@ -63,33 +63,33 @@ export default function TaskCardPage({ curTask }: TaskProps) {
 
 
     return (
-        <div className="card space-y-4 border-2 ">
+        <div className="card space-y-4 shadow-md  dark:bg-base-300 border-2 border-base-100 hover:border-base-200">
             <div className={isChanging ? "opacity-60" : "opacity-100"}>
                 <div className='p-2'>
                     <div className="flex gap-2 ">
-                        <CheckTaskInputPage title={curTask.title} id={curTask.task_id} checkState={curTask.isChecked} />
+                        <CheckTaskInputPage id={curTask.task_id} checkState={curTask.isChecked} />
+                    <div className={curTask.isChecked ? 'line-through' : ''}>
+                        {curTask.title}
                     </div>
-                    <small>{curTask.description}</small>
-                    {/* แสดงเวลาจาก raw เช่น 1970-01-01T00:00:00.000Z ลบ index หลังจาก 10 ออก และเปลี่ยนจาก - เป็น / จะได้เวลาเป็น YYYY/MM/DD */}
-                    <div className="text-error">Due Date {String(new Date(task.due_date).toISOString().slice(0, 10).replace(/-/g, '/'))}</div>
-                </div>
-                <div className='flex-1 gap-2 flex justify-end p-2'>
-                    <div className='text-success'>
-                        <button disabled={isChanging} onClick={openModal}>
-                            <Icon icon="tabler:pencil" width="1.5em" height="1.5em" />
-                        </button>
-                        <div>
-                            {isLoading ? (
-                                <span className="loading loading-spinner loading-md"></span>
-                            ) : (
-                                <button disabled={isChanging} onClick={handleDelete} title="">
-                                    <Icon className='text-error' icon="tabler:trash-filled" width="1.5em" height="1.5em" />
-                                </button>
-                            )}
-                        </div>
                     </div>
-                </div>
+
+                <small>{curTask.description}</small>
+                {/* แสดงเวลาจาก raw เช่น 1970-01-01T00:00:00.000Z ลบ index หลังจาก 10 ออก และเปลี่ยนจาก - เป็น / จะได้เวลาเป็น YYYY/MM/DD */}
+                <div className="text-error">Due Date {String(new Date(task.due_date).toISOString().slice(0, 10).replace(/-/g, '/'))}</div>
+            </div>
+            <div className='flex-1 gap-2 flex justify-end p-2'>
+                <button disabled={isChanging} onClick={openModal}>
+                    <Icon className="text-success" icon="tabler:pencil" width="1.5em" height="1.5em" />
+                </button>
+                {isLoading ? (
+                    <span className="loading loading-spinner loading-md"></span>
+                ) : (
+                    <button disabled={isChanging} onClick={handleDelete} title="">
+                        <Icon className='text-error' icon="tabler:trash-filled" width="1.5em" height="1.5em" />
+                    </button>
+                )}
             </div>
         </div>
+        </div >
     )
 }
