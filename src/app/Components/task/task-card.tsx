@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 import { useTask } from "../TaskProvider";
 import { CheckTaskInputPage } from "@/app/Widgets/check-task";
+import { toast } from "react-toastify";
 
 interface TaskProps {
     curTask: {
@@ -35,13 +36,14 @@ export default function TaskCardPage({ curTask }: TaskProps) {
             if (!success) {
                 setIsLoading(false);
                 setChanging(true);
-
             }
         } catch (error) {
             setIsLoading(true);
+            toast.error("ไม่สามารถลบได้")
         } finally {
             setIsLoading(false);
-            setChanging(true);
+            setChanging(false);
+            toast.success("ลบสำเร็จ")
         }
     };
 

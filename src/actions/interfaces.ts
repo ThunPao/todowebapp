@@ -8,4 +8,5 @@ export interface CreateItemResult {
         _form?: string[];
     };
     success?: boolean;
+    message?: string;
 }

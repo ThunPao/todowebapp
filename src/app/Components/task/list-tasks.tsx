@@ -8,6 +8,7 @@ import TaskEditerModal from "../modals/taskEditor";
 import { TaskProvider } from "../TaskProvider";
 import TaskDelBtn from "@/app/Widgets/taskDelBtn";
 import TaskCardPage from "./task-card";
+import { ToastContainer } from 'react-toastify';
 
 interface TaskListProps {
     fetchData: () => Promise<TaskColla[]>
@@ -43,6 +44,7 @@ export default async function TaskList({ fetchData }: TaskListProps) {
             <div className='grid lg:grid-cols-3 xl:grid-cols-4 gap-4'>
                 {items}
             </div>
+            <ToastContainer position="bottom-right"/>
         </TaskProvider>
 
     </div>

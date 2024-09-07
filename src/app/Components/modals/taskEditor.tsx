@@ -4,13 +4,13 @@ import { useFormState } from "react-dom";
 import { useTask } from '../TaskProvider';
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
-
+import { toast } from "react-toastify";
 
 export default function TaskEditerModal() {
   const curDate = new Date().toISOString().split("T")[0];
   const formRef = useRef<HTMLFormElement>(null);
   const modalRef = useRef<HTMLDialogElement>(null);
-  const { task,isLoading,setIsLoading } = useTask();
+  const { task, isLoading, setIsLoading } = useTask();
 
 
   // formState เพิ่ม แก้ไข ลบ
@@ -47,8 +47,13 @@ export default function TaskEditerModal() {
   // Closed Modal ตอน action สำเร็จ
   useEffect(() => {
     if (formRef.current) {
-      if (curState && curState.success) {
-        setIsLoading(false);
+      if (curState) {
+        if (curState.success) {
+          setIsLoading(false);
+          toast.success(curState.message);
+        } else {
+          toast.error(curState.message);
+        }
       }
       formRef.current.reset();
       closeModal();

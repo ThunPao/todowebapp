@@ -25,10 +25,10 @@ export async function editTodo(formState: CreateItemResult, formData: FormData):
         // revalidatePath(paths.home()) //เคลีย Cache
         revalidateTag("tasks")
 
-        return { success: true, data: updateData, errors: {} };
+        return { success: true, data: updateData, errors: {}, message: "แก้ไขสำเร็จ" };
         // return { success: true, errors: {} };
     } catch (error) {
-        return { errors: { _form: ["Something went wrong"] } }
+        return { message: "ไม่สามารถแก้ไขได้", errors: { _form: ["Something went wrong"] } }
     }
 
 }
@@ -49,10 +49,10 @@ export async function addTodo(formState: CreateItemResult, formData: FormData): 
         })
         // revalidatePath(paths.home()) //เคลีย Cache
         revalidateTag("tasks");
-        return { success: true, data: updateData, errors: {} };
+        return { success: true, data: updateData, errors: {}, message: "เพิ่มสำเร็จ" };
     } catch (error) {
         console.error(error)
-        return { errors: { _form: ["Something went wrong"] } }
+        return { message: "ไม่สามารถเพิ่ม Todo", errors: { _form: ["Something went wrong"] } }
     }
 
 }
@@ -65,10 +65,10 @@ export async function deleteTodo(formState: CreateItemResult, formData: FormData
         // revalidatePath(paths.home()) //เคลีย Cache
         revalidateTag("tasks");
 
-        return { success: true, data: deleteData, errors: {} };
+        return { success: true, data: deleteData, errors: {}, message: "ลบสำเร็จ" };
     } catch (error) {
         console.error(error)
-        return { errors: { _form: ["Something went wrong"] } }
+        return { message: "ไม่สามารถลบ Todo", errors: { _form: ["Something went wrong"] } }
 
     }
 }
