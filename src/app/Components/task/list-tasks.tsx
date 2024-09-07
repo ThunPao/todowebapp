@@ -33,7 +33,7 @@ export default async function TaskList({ fetchData }: TaskListProps) {
                 <div className="">
                     <div>
                         <p className="font-bold text-lg">My Tasks</p>
-                        <small className="text-sm">You have {items.length} task{items.length > 1 ? "s" : null} left</small>
+                        <small className="text-sm">คุณมีรายการ {items.length} task{items.length > 1 ? "s" : null}</small>
                     </div>
                 </div>
                 <TaskModalButton isEdit={false}>

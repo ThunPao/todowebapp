@@ -85,10 +85,9 @@ export default function TaskEditerModal() {
                 <input name="id" type="hidden" defaultValue={task.task_id} />
                 <button
                   disabled={isLoading}
-
                   formAction={deleteTodo} title="Delete" className="btn btn-error btn-outline btn-sm">
                   <Icon icon="tabler:trash-filled" width="1.5em" height="1.5em" />
-                  ลบ {task.task_id}</button>
+                  Remove</button>
               </form>
             )}
 
@@ -112,7 +111,7 @@ export default function TaskEditerModal() {
               <input
                 disabled={isLoading}
 
-                name="title" type="text" defaultValue={task.title} placeholder="Task Title" required className="input input-bordered" />
+                name="title" maxLength={256} type="text" defaultValue={task.title} placeholder="Task Title" required className="input input-bordered" />
             </label>
             {/* Description */}
             <label className="form-control">
@@ -124,7 +123,7 @@ export default function TaskEditerModal() {
               <textarea
                 disabled={isLoading}
 
-                name="description" defaultValue={task.description} placeholder="Task Description" required className="input min-h-20 max-h-64 input-bordered" />
+                name="description" maxLength={256} defaultValue={task.description} placeholder="Task Description" required className="input min-h-20 max-h-64 input-bordered" />
             </label>
             {/* Due Date */}
             <label className="form-control">
