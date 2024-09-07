@@ -73,16 +73,15 @@ export default function TaskCardPage({ curTask }: TaskProps) {
                 </div>
                 <div className='flex-1 gap-2 flex justify-end p-2'>
                     <div className='text-success'>
-                        <button onClick={openModal}>
+                        <button disabled={isChanging} onClick={openModal}>
                             <Icon icon="tabler:pencil" width="1.5em" height="1.5em" />
                         </button>
                         <div>
                             {isLoading ? (
                                 <span className="loading loading-spinner loading-md"></span>
                             ) : (
-                                <button onClick={handleDelete} title="">
+                                <button disabled={isChanging} onClick={handleDelete} title="">
                                     <Icon className='text-error' icon="tabler:trash-filled" width="1.5em" height="1.5em" />
-
                                 </button>
                             )}
                         </div>

@@ -14,7 +14,7 @@ interface TaskListProps {
 }
 
 export default async function TaskList({ fetchData }: TaskListProps) {
-    await new Promise(resolve=> setTimeout(resolve,1500))
+    // await new Promise(resolve=> setTimeout(resolve,1500))
 
     const datas = await fetchData();
     const items = datas.map((task) => {
