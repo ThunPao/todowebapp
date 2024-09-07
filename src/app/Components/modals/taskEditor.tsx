@@ -6,6 +6,14 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import { toast } from "react-toastify";
 
+// import '@sweetalert2/theme-borderless/borderless.css';
+
+import Swal from "sweetalert2/dist/sweetalert2.js";
+
+// import withReactContent from 'sweetalert2-react-content'
+
+
+
 export default function TaskEditerModal() {
   const curDate = new Date().toISOString().split("T")[0];
   const formRef = useRef<HTMLFormElement>(null);
@@ -51,7 +59,9 @@ export default function TaskEditerModal() {
         if (curState.success) {
           setIsLoading(false);
           toast.success(curState.message);
+          Swal.fire({ title: curState.message, timer: 3000, timerProgressBar: true,icon: "success" })
         } else {
+          // Swal.fire({ title: curState.message})
           toast.error(curState.message);
         }
       }

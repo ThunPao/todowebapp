@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBarPage from "./Components/navBar";
 import 'react-toastify/dist/ReactToastify.css';
+import '@sweetalert2/theme-borderless/borderless.css';
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -16,6 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html data-theme="light" lang="en">
+      
       <body className={inter.className}>
         <NavBarPage />
         {children}</body>

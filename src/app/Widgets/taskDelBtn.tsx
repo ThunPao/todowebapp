@@ -1,9 +1,7 @@
 "use client"
-import * as actions from "@/actions"
 import { delTask } from "@/actions/delete-task";
-import { delcurTask } from "@/db/queries/taskQueries";
 import { useState } from "react";
-import { useFormState } from "react-dom";
+import Swal from "sweetalert2";
 
 interface TaskProps {
     children: React.ReactNode
@@ -15,16 +13,26 @@ export default function TaskDelBtn({ children, id }: TaskProps) {
 
     const handleDelete = async () => {
         setIsLoading(true);
-        try {
-            const success = await delTask(id);
-            if (!success) {
-                setIsLoading(false);
-            }
-        } catch (error) {
-            setIsLoading(true);
-        } finally {
-            setIsLoading(false);
-        }
+
+        // await Swal.fire({
+        //     title: "ยืนยันการลบ"
+        // }).then(async (res) => {
+        //     if (res.isConfirmed) {
+        //         try {
+        //             const success = await delTask(id);
+        //             if (!success) {
+        //                 setIsLoading(false);
+        //             }
+        //         } catch (error) {
+        //             setIsLoading(true);
+        //         } finally {
+        //             setIsLoading(false);
+        //             Swal.fire("Saved!", "", "success");
+        //         }
+        //     }
+        // })
+
+
     };
 
     return (

@@ -6,7 +6,6 @@ import TaskModalButton from "@/app/Widgets/taskModalBtn";
 import { TaskColla } from "@/app/utilities/task";
 import TaskEditerModal from "../modals/taskEditor";
 import { TaskProvider } from "../TaskProvider";
-import TaskDelBtn from "@/app/Widgets/taskDelBtn";
 import TaskCardPage from "./task-card";
 import { ToastContainer } from 'react-toastify';
 
@@ -33,7 +32,7 @@ export default async function TaskList({ fetchData }: TaskListProps) {
                 <div className="">
                     <div>
                         <p className="font-bold text-lg">My Tasks</p>
-                        <small className="text-sm">คุณมีรายการ {items.length} task{items.length > 1 ? "s" : null}</small>
+                        <small className="text-sm">You have {items.length} task{items.length > 1 ? "s" : null}</small>
                     </div>
                 </div>
                 <TaskModalButton isEdit={false}>
@@ -46,7 +45,7 @@ export default async function TaskList({ fetchData }: TaskListProps) {
                         {items}
                     </>
                 ) : (
-                    "Currently no tasks"
+                    "Currently have no tasks"
                 )}
             </div>
             <ToastContainer position="bottom-right" />
