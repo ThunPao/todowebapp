@@ -1,4 +1,4 @@
-import { Taskstatus } from "@prisma/client";
+import { Taskpriority, Taskstatus } from "@prisma/client";
 
 export interface TaskColla {
     task_id: number;
@@ -7,4 +7,5 @@ export interface TaskColla {
     isChecked: boolean;
     due_date: Date;
     status: Taskstatus;
+    priority: Taskpriority;
 }

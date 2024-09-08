@@ -189,7 +189,7 @@ export default function TaskEditerModal() {
             </div>
           </form>
         </div>
-      </dialog >
+      </dialog>
     </>
   );
 }

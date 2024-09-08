@@ -81,17 +81,18 @@ export default function TaskCardPage({ curTask }: TaskProps) {
 
 
     return (
-        <div className="card space-y-4 shadow-md  dark:bg-base-300 border-2 border-base-100 hover:border-base-200">
+        <div className="card space-y-4  shadow-md dark:bg-base-300 border-2 border-base-100 hover:border-base-200">
             <div className={isChanging ? "opacity-60" : "opacity-100"}>
-                <div className='p-2 space-y-3'>
-                    <div className="flex gap-2 ">
+                <div className='p-2 space-y-3 w-72'>
+                    <div className="flex overflow-hidden gap-2">
                         <CheckTaskInputPage id={curTask.task_id} checkState={curTask.isChecked} />
                         <div className={curTask.isChecked ? 'line-through' : ''}>
                             {curTask.title}
                         </div>
                     </div>
                     <div className="py-3">
-                        <small>{curTask.description}</small>
+                        <small>{curTask.description}
+                        </small>
                     </div>
 
                     <hr></hr>
@@ -114,7 +115,6 @@ export default function TaskCardPage({ curTask }: TaskProps) {
                     </div>
 
                     <div>
-
                         <button disabled={isChanging} onClick={openModal}>
                             <Icon className="text-success" icon="tabler:pencil" width="1.5em" height="1.5em" />
                         </button>

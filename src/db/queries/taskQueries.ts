@@ -13,7 +13,10 @@ export const fetchTasks = unstable_cache(() => {
                 description: true,
                 due_date: true,
                 isChecked: true,
-                status: true
+                status: true,
+                priority: true
+            }, orderBy: {
+                priority: "desc"
             }
         }
 
@@ -21,8 +24,8 @@ export const fetchTasks = unstable_cache(() => {
 }, ['tasks'], { revalidate: 3600, tags: ["tasks"] }
 );
 
-export const fetchSearchTasks = unstable_cache(async(term: string) => {
-    const status = term as Taskstatus || undefined;
+export const fetchSearchTasks = unstable_cache(async (term: string) => {
+    const status = term as Taskstatus;
     if (!status) {
         return redirect(`/`)
     }
@@ -34,11 +37,14 @@ export const fetchSearchTasks = unstable_cache(async(term: string) => {
                 description: true,
                 due_date: true,
                 isChecked: true,
-                status: true
+                status: true,
+                priority: true,
             },
             where: {
                 status: Taskstatus[status]
-            },
+            }, orderBy: {
+                priority: "desc"
+            }
         }
     );
 

@@ -46,7 +46,7 @@ export default async function TaskList({ fetchData }: TaskListProps) {
                 </Suspense>
             </div>
 
-            <div className='grid lg:grid-cols-3 xl:grid-cols-4 gap-4 border-2 border-dashed p-3 rounded-lg'>
+            <div className='grid lg:grid-cols-3 xl:grid-cols-4 gap-4 border-2 border-dashed p-3 rounded-lg overflow-hidden'>
                 {items.length > 0 ? (
                     <>
                         {items}
