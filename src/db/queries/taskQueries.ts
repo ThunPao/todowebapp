@@ -82,6 +82,7 @@ export const fetchSearchTasks = unstable_cache(async(term: string) => {
 //         }
 //     );
 // }
+
 export async function delcurTask(taskId: number) {
     await db.tasks.delete({
         where: {
