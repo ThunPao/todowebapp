@@ -1,5 +1,5 @@
 import TaskList from './Components/task/list-tasks';
-import { fetchTasks,fetchrawTasks } from '@/db/queries/taskQueries';
+import { fetchTasks } from '@/db/queries/taskQueries';
 import { Suspense } from 'react';
 import TaskLoadSkeletonPage from './Widgets/taskLoadSkeleton';
 
