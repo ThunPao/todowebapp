@@ -82,9 +82,9 @@ export default function TaskEditerModal() {
     }
   }, [deleteState]);
 
-
+  //เปลี่ยนสถานะ ของ Status เวลาเลือก
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newStatus = e.target.value as Taskstatus;  // Ensure the new value is of type Taskstatus
+    const newStatus = e.target.value as Taskstatus;
     setStatus(newStatus);
   };
   return (
