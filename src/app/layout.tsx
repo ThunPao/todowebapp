@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
 import NavBarPage from "./Components/navBar";
 import 'react-toastify/dist/ReactToastify.css';
 import '@sweetalert2/theme-borderless/borderless.css';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Noto_Sans_Thai({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Todo App",

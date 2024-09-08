@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 // import '@sweetalert2/theme-borderless/borderless.css';
 
 import Swal from "sweetalert2/dist/sweetalert2.js";
-import { Taskstatus } from "@prisma/client";
+import { Taskpriority, Taskstatus } from "@prisma/client";
 
 // import withReactContent from 'sweetalert2-react-content'
 
@@ -20,7 +20,8 @@ export default function TaskEditerModal() {
   const formRef = useRef<HTMLFormElement>(null);
   const modalRef = useRef<HTMLDialogElement>(null);
   const { task, isLoading, setIsLoading } = useTask();
-  const [status, setStatus] = useState<Taskstatus>(task.status);
+  const [status, setStatus] = useState<Taskstatus>(task.status || "PENDING");
+  const [priority, setPrity] = useState<Taskpriority>(task.priority || "LOW");
 
   // formState เพิ่ม แก้ไข ลบ
   const [addState, addTodo] = useFormState(actions.addTodo, {
@@ -31,14 +32,15 @@ export default function TaskEditerModal() {
   });
   const [deleteState, deleteTodo] = useFormState(actions.deleteTodo, {
     errors: {},
-
   });
+
   const [initialTask, setInitialTask] = useState<any>(null);
 
   // อัปเดท task ให้ตรงตาม provider เพื่อให้ task คงค่า value ดั้งเดิม
   useEffect(() => {
     if (task) {
       setStatus(task.status);
+      setPrity(task.priority);
       setInitialTask({ ...task })
       setIsLoading(false);
     }
@@ -87,6 +89,11 @@ export default function TaskEditerModal() {
     const newStatus = e.target.value as Taskstatus;
     setStatus(newStatus);
   };
+
+  const handleChangePr = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newStatus = e.target.value as Taskpriority;
+    setPrity(newStatus);
+  };
   return (
     <>
       <dialog id="taskEditmodal" ref={modalRef} className="modal">
@@ -122,7 +129,7 @@ export default function TaskEditerModal() {
             <label className="form-control">
               <div className="label">
                 <span className="label-text">
-                  Title <small className="text-red-500">*</small>
+                  หัวข้อ <small className="text-red-500">*</small>
                 </span>
               </div>
               <input
@@ -134,7 +141,7 @@ export default function TaskEditerModal() {
             <label className="form-control">
               <div className="label">
                 <span className="label-text">
-                  Description <small className="text-red-500">*</small>
+                  รายละเอียด <small className="text-red-500">*</small>
                 </span>
               </div>
               <textarea
@@ -146,7 +153,7 @@ export default function TaskEditerModal() {
             <label className="form-control">
               <div className="label">
                 <span className="label-text">
-                  Due <small className="text-red-500">*</small>
+                  กำหนดการ <small className="text-red-500">*</small>
                 </span>
               </div>
               <input
@@ -164,7 +171,7 @@ export default function TaskEditerModal() {
             {/* Status */}
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">Status</span>
+                <span className="label-text">สถานะ</span>
               </div>
               <select name="curStatus" onChange={handleChange} value={status} className="select select-bordered">
                 <option value="PENDING">ยังไม่ดำเนินการ</option>
@@ -173,6 +180,16 @@ export default function TaskEditerModal() {
               </select>
             </label>
 
+            <label className="form-control w-full max-w-xs">
+              <div className="label">
+                <span className="label-text">ความเร่งด่วน</span>
+              </div>
+              <select name="priority" onChange={handleChangePr} value={priority} className="select select-bordered">
+                <option value="LOW">ช้า</option>
+                <option value="MEDIUM">ปานกลาง</option>
+                <option value="HIGH">เร่งด่วน</option>
+              </select>
+            </label>
 
             <div className="py-4">
               {isLoading ? (

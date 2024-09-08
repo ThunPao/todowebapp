@@ -5,7 +5,7 @@ import { CreateItemResult } from "./interfaces";
 import { redirect, useSearchParams } from "next/navigation";
 import { db } from '@/db';
 import { paths } from '@/paths';
-import { Tasks, Taskstatus } from "@prisma/client";
+import { Taskpriority, Tasks, Taskstatus } from "@prisma/client";
 
 interface ResStatusChange {
     success?: boolean;
@@ -13,13 +13,13 @@ interface ResStatusChange {
 }
 
 
-export async function searchTodos(formState: ResStatusChange,formData: FormData): Promise<ResStatusChange> {
+export async function searchTodos(formState: ResStatusChange, formData: FormData): Promise<ResStatusChange> {
     const term = formData.get("status")
     if (typeof term !== 'string' || !term) {
         redirect('/');
     }
     // redirect(`/search?term=${term}`)
-    return {success:true}
+    return { success: true }
 }
 export async function editTodo(formState: CreateItemResult, formData: FormData): Promise<CreateItemResult> {
     try {
@@ -28,13 +28,16 @@ export async function editTodo(formState: CreateItemResult, formData: FormData):
         const description = String(formData.get("description"))
         const dueDate = new Date(String((formData.get("dueDate"))))
         const status = formData.get("curStatus") as Taskstatus;
+        const prioRity = formData.get("priority") as Taskpriority;
+console.log("prioRity : ",prioRity)
         const updateData: Tasks = await db.tasks.update({
             where: { task_id: id },
             data: {
                 title: title,
                 description: description,
                 due_date: dueDate,
-                status: Taskstatus[status]
+                status: Taskstatus[status],
+                priority: Taskpriority[prioRity]
             }
         })
         // revalidatePath(paths.home()) //เคลีย Cache

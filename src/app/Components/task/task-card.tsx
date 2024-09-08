@@ -6,8 +6,8 @@ import { useTask } from "../TaskProvider";
 import { CheckTaskInputPage } from "@/app/Widgets/check-task";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2/dist/sweetalert2.js";
-import { Taskstatus } from "@prisma/client";
-import { statusThai } from "../variables/taskStatusconvo";
+import { Taskpriority, Taskstatus } from "@prisma/client";
+import { prtyThai, statusThai } from "../variables/taskStatusconvo";
 
 
 interface TaskProps {
@@ -18,6 +18,7 @@ interface TaskProps {
         due_date: Date;
         isChecked: boolean;
         status: Taskstatus;
+        priority: Taskpriority;
     }
 
 }
@@ -72,7 +73,8 @@ export default function TaskCardPage({ curTask }: TaskProps) {
                 title: curTask.title,
                 description: curTask.description,
                 due_date: curTask.due_date,
-                status: curTask.status
+                status: curTask.status,
+                priority: curTask.priority
                 // isChecked: task.isChecked
             })
             modalElement.showModal();
@@ -83,14 +85,19 @@ export default function TaskCardPage({ curTask }: TaskProps) {
     return (
         <div className="card space-y-4  shadow-md dark:bg-base-300 border-2 border-base-100 hover:border-base-200">
             <div className={isChanging ? "opacity-60" : "opacity-100"}>
-                <div className='p-2 space-y-3 w-72'>
+                <div className='p-2 space-y-3'>
+                    <div className="flex justify-between gap-2 ">
+
                     <div className="flex overflow-hidden gap-2">
                         <CheckTaskInputPage id={curTask.task_id} checkState={curTask.isChecked} />
-                        <div className={curTask.isChecked ? 'line-through' : ''}>
+                        <div className={curTask.isChecked ? 'line-through' : '' + "w-52 lg:w-auto"}>
                             {curTask.title}
                         </div>
                     </div>
-                    <div className="py-3">
+                    <div className="badge badge-neutral badge-sm">{prtyThai(curTask.priority)}</div>
+                    </div>
+
+                    <div className="py-3 line-clamp-2 w-64">
                         <small>{curTask.description}
                         </small>
                     </div>

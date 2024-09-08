@@ -32,12 +32,12 @@ export default async function TaskList({ fetchData }: TaskListProps) {
             <div className="flex justify-between py-4">
                 <div className="">
                     <div>
-                        <p className="font-bold text-lg">My Tasks</p>
-                        <small className="text-sm">You have {items.length} task{items.length > 1 ? "s" : null}</small>
+                        <p className="font-bold text-lg">Task ของคุณ</p>
+                        <small className="text-sm">คุณมี {items.length} task{items.length > 1 ? "s" : null}</small>
                     </div>
                 </div>
                 <TaskModalButton isEdit={false}>
-                    <div className="btn bg-primary text-white">Add Task</div>
+                    <div className="btn bg-primary text-white">เพิ่ม Task</div>
                 </TaskModalButton>
             </div>
             <div className="py-4">
