@@ -87,14 +87,13 @@ export default function TaskCardPage({ curTask }: TaskProps) {
             <div className={isChanging ? "opacity-60" : "opacity-100"}>
                 <div className='p-2 space-y-3'>
                     <div className="flex justify-between gap-2 ">
-
-                    <div className="flex overflow-hidden gap-2">
-                        <CheckTaskInputPage id={curTask.task_id} checkState={curTask.isChecked} />
-                        <div className={curTask.isChecked ? 'line-through' : '' + "w-60 lg:w-40"}>
-                            {curTask.title}
+                        <div className="flex overflow-hidden gap-2">
+                            <CheckTaskInputPage id={curTask.task_id} checkState={curTask.isChecked} />
+                            <div className={curTask.isChecked ? 'line-through' : '' + "w-60 lg:w-40"}>
+                                {curTask.title}
+                            </div>
                         </div>
-                    </div>
-                    <div className="badge badge-neutral badge-sm">{prtyThai(curTask.priority)}</div>
+                        <div className="badge badge-neutral badge-sm">{prtyThai(curTask.priority)}</div>
                     </div>
 
                     <div className="py-3 line-clamp-2 w-64">

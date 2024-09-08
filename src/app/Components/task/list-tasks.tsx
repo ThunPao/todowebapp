@@ -37,7 +37,7 @@ export default async function TaskList({ fetchData }: TaskListProps) {
                     </div>
                 </div>
                 <TaskModalButton isEdit={false}>
-                    <div className="btn bg-primary text-white">เพิ่ม Task</div>
+                    <div className={`btn bg-primary text-white ${items.length < 1 && "animate-pulse"}`}>เพิ่ม Task</div>
                 </TaskModalButton>
             </div>
             <div className="py-4">
