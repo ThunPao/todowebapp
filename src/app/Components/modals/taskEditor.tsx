@@ -2,13 +2,14 @@
 import * as actions from "@/actions";
 import { useFormState } from "react-dom";
 import { useTask } from '../TaskProvider';
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, Suspense, useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import { toast } from "react-toastify";
 
 // import '@sweetalert2/theme-borderless/borderless.css';
 
 import Swal from "sweetalert2/dist/sweetalert2.js";
+import { Taskstatus } from "@prisma/client";
 
 // import withReactContent from 'sweetalert2-react-content'
 
@@ -19,7 +20,7 @@ export default function TaskEditerModal() {
   const formRef = useRef<HTMLFormElement>(null);
   const modalRef = useRef<HTMLDialogElement>(null);
   const { task, isLoading, setIsLoading } = useTask();
-
+  const [status, setStatus] = useState<Taskstatus>(task.status);
 
   // formState เพิ่ม แก้ไข ลบ
   const [addState, addTodo] = useFormState(actions.addTodo, {
@@ -37,6 +38,7 @@ export default function TaskEditerModal() {
   // อัปเดท task ให้ตรงตาม provider เพื่อให้ task คงค่า value ดั้งเดิม
   useEffect(() => {
     if (task) {
+      setStatus(task.status);
       setInitialTask({ ...task })
       setIsLoading(false);
     }
@@ -80,6 +82,11 @@ export default function TaskEditerModal() {
     }
   }, [deleteState]);
 
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newStatus = e.target.value as Taskstatus;  // Ensure the new value is of type Taskstatus
+    setStatus(newStatus);
+  };
   return (
     <>
       <dialog id="taskEditmodal" ref={modalRef} className="modal">
@@ -89,8 +96,8 @@ export default function TaskEditerModal() {
           </form>
           <div className="inline-flex items-center gap-4">
 
-            <h3 className="font-bold text-lg">Task</h3>
-            {task.task_id > 0 && (
+            <h3 className="font-bold text-lg">{task.task_id > 0 ? "Edit" : "Add"} Task</h3>
+            {/* {task.task_id > 0 && (
               <form onSubmit={Loading} action={deleteTodo}>
                 <input name="id" type="hidden" defaultValue={task.task_id} />
                 <button
@@ -99,7 +106,7 @@ export default function TaskEditerModal() {
                   <Icon icon="tabler:trash-filled" width="1.5em" height="1.5em" />
                   Remove</button>
               </form>
-            )}
+            )} */}
 
           </div>
 
@@ -159,7 +166,7 @@ export default function TaskEditerModal() {
               <div className="label">
                 <span className="label-text">Status</span>
               </div>
-              <select name="curStatus" defaultValue={task.status} className="select select-bordered">
+              <select name="curStatus" onChange={handleChange} value={status} className="select select-bordered">
                 <option value="PENDING">ยังไม่ดำเนินการ</option>
                 <option value="IN_PROGRESS">กำลังดำเนินการ</option>
                 <option value="COMPLETED">ดำเนินการเสร็จสิ้น</option>

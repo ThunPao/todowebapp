@@ -6,6 +6,8 @@ import { useTask } from "../TaskProvider";
 import { CheckTaskInputPage } from "@/app/Widgets/check-task";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2/dist/sweetalert2.js";
+import { Taskstatus } from "@prisma/client";
+import { statusThai } from "../variables/taskStatusconvo";
 
 
 interface TaskProps {
@@ -15,6 +17,7 @@ interface TaskProps {
         description: string;
         due_date: Date;
         isChecked: boolean;
+        status: Taskstatus;
     }
 
 }
@@ -69,6 +72,7 @@ export default function TaskCardPage({ curTask }: TaskProps) {
                 title: curTask.title,
                 description: curTask.description,
                 due_date: curTask.due_date,
+                status: curTask.status
                 // isChecked: task.isChecked
             })
             modalElement.showModal();
@@ -90,8 +94,15 @@ export default function TaskCardPage({ curTask }: TaskProps) {
                     <small>{curTask.description}</small>
                     {/* แสดงเวลาจาก raw เช่น 1970-01-01T00:00:00.000Z ลบ index หลังจาก 10 ออก และเปลี่ยนจาก - เป็น / จะได้เวลาเป็น YYYY/MM/DD */}
                     <div className="text-error">Due Date {String(new Date(task.due_date).toISOString().slice(0, 10).replace(/-/g, '/'))}</div>
+
                 </div>
-                <div className='flex-1 gap-2 flex justify-end p-2'>
+
+                <div className='flex-1 gap-2 flex justify-between p-2'>
+                    <div className="badge badge-neutral py-3">
+                        {statusThai(curTask.status)}
+                    </div>
+                    <div>
+
                     <button disabled={isChanging} onClick={openModal}>
                         <Icon className="text-success" icon="tabler:pencil" width="1.5em" height="1.5em" />
                     </button>
@@ -102,6 +113,8 @@ export default function TaskCardPage({ curTask }: TaskProps) {
                             <Icon className='text-error' icon="tabler:trash-filled" width="1.5em" height="1.5em" />
                         </button>
                     )}
+                    </div>
+
                 </div>
             </div>
         </div >

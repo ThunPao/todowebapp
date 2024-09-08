@@ -20,7 +20,6 @@ export async function editTodo(formState: CreateItemResult, formData: FormData):
         const description = String(formData.get("description"))
         const dueDate = new Date(String((formData.get("dueDate"))))
         const status = formData.get("curStatus") as Taskstatus;
-        console.log(status);
         const updateData: Tasks = await db.tasks.update({
             where: { task_id: id },
             data: {
