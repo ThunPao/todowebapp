@@ -20,7 +20,8 @@ export const fetchTasks = unstable_cache(() => {
     );
 }, ['tasks'], { revalidate: 3600, tags: ["tasks"] }
 );
-export async function fetchSearchTasks(term: string) {
+
+export const fetchSearchTasks = unstable_cache(async(term: string) => {
     const status = term as Taskstatus || undefined;
     if (!status) {
         return redirect(`/`)
@@ -40,22 +41,47 @@ export async function fetchSearchTasks(term: string) {
             },
         }
     );
-}
 
-export async function fetchrawTasks() {
-    await new Promise(resolve => setTimeout(resolve, 2500))
-    return db.tasks.findMany(
-        {
-            select: {
-                task_id: true,
-                title: true,
-                description: true,
-                due_date: true,
-                isChecked: true,
-            }
-        }
-    );
-}
+}, ['tasks'], { revalidate: 3600, tags: ["tasks"] }
+);
+
+
+// export async function fetchSearchTasksstatic(term: string) {
+//     const status = term as Taskstatus || undefined;
+//     if (!status) {
+//         return redirect(`/`)
+//     }
+//     return await db.tasks.findMany(
+//         {
+//             select: {
+//                 task_id: true,
+//                 title: true,
+//                 description: true,
+//                 due_date: true,
+//                 isChecked: true,
+//                 status: true
+//             },
+//             where: {
+//                 status: Taskstatus[status]
+//             },
+//         }
+//     );
+// }
+
+// export async function fetchrawTasks() {
+//     await new Promise(resolve => setTimeout(resolve, 2500))
+//     return db.tasks.findMany(
+//         {
+//             select: {
+//                 task_id: true,
+//                 title: true,
+//                 description: true,
+//                 due_date: true,
+//                 isChecked: true,
+//             }
+//         }
+//     );
+// }
 export async function delcurTask(taskId: number) {
     await db.tasks.delete({
         where: {

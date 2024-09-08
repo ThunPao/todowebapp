@@ -9,10 +9,9 @@ import { Taskstatus } from "@prisma/client";
 
 export default function SearchTaskPage() {
     const searchParams = useSearchParams();
-    const { task, isLoading, setIsLoading } = useTask();
-
-    const [status, setStatus] = useState<Taskstatus>(task.status);
-
+    const curSearch = searchParams.get("term") as Taskstatus;
+    const { isLoading, setIsLoading } = useTask();
+    const [status, setStatus] = useState<Taskstatus>(curSearch);
     const [editState, editTodo] = useFormState(actions.searchTodos, {
     });
 
@@ -36,7 +35,7 @@ export default function SearchTaskPage() {
         <>
             <form onSubmit={() => setIsLoading(true)} action={editTodo}>
                 <div className="join">
-                    <select onChange={handleChange} value={status} className="select select-bordered join-item"
+                    <select onChange={handleChange} value={status} defaultValue={curSearch} className="select select-bordered join-item"
                         name="status" id="">
                         <option value="">ทั้งหมด</option>
                         <option value="PENDING">ยังไม่ดำเนินการ</option>
@@ -45,7 +44,7 @@ export default function SearchTaskPage() {
                     </select>
                     <button disabled={isLoading} className="btn join-item" formAction={editTodo}>
                         {isLoading && (
-                        <span className="loading loading-spinner loading-md"></span>
+                            <span className="loading loading-spinner loading-md"></span>
 
                         )}
                         ค้นหา</button>

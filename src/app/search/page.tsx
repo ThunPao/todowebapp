@@ -1,4 +1,4 @@
-import { fetchSearchTasks, fetchTasks, fetchrawTasks } from '@/db/queries/taskQueries';
+import { fetchSearchTasks } from '@/db/queries/taskQueries';
 import { Suspense } from 'react';
 import TaskLoadSkeletonPage from '../Widgets/taskLoadSkeleton';
 import { redirect } from 'next/navigation';
