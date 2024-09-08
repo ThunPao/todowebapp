@@ -8,6 +8,7 @@ import TaskEditerModal from "../modals/taskEditor";
 import { TaskProvider } from "../TaskProvider";
 import TaskCardPage from "./task-card";
 import { ToastContainer } from 'react-toastify';
+import SearchTaskPage from "./search-task";
 
 interface TaskListProps {
     fetchData: () => Promise<TaskColla[]>
@@ -39,6 +40,12 @@ export default async function TaskList({ fetchData }: TaskListProps) {
                     <div className="btn bg-primary text-white">Add Task</div>
                 </TaskModalButton>
             </div>
+            <div className="py-4">
+                <Suspense>
+                    <SearchTaskPage />
+                </Suspense>
+            </div>
+
             <div className='grid lg:grid-cols-3 xl:grid-cols-4 gap-4 border-2 border-dashed p-3 rounded-lg'>
                 {items.length > 0 ? (
                     <>

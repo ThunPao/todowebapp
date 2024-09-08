@@ -2,24 +2,32 @@
 
 import { revalidatePath, revalidateTag } from "next/cache";
 import { CreateItemResult } from "./interfaces";
-import { redirect } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import { db } from '@/db';
 import { paths } from '@/paths';
-import { Tasks } from "@prisma/client";
-
+import { Tasks, Taskstatus } from "@prisma/client";
+export async function searchTodos(formData: FormData) {
+    const term = formData.get("status")
+    if (typeof term !== 'string' || !term) {
+        redirect('/');
+    }
+    redirect(`/search?term=${term}`)
+}
 export async function editTodo(formState: CreateItemResult, formData: FormData): Promise<CreateItemResult> {
     try {
         const id = Number(formData.get("id"))
         const title = String(formData.get("title"))
         const description = String(formData.get("description"))
         const dueDate = new Date(String((formData.get("dueDate"))))
-
+        const status = formData.get("curStatus") as Taskstatus;
+        console.log(status);
         const updateData: Tasks = await db.tasks.update({
             where: { task_id: id },
             data: {
                 title: title,
                 description: description,
                 due_date: dueDate,
+                status: Taskstatus[status]
             }
         })
         // revalidatePath(paths.home()) //เคลีย Cache

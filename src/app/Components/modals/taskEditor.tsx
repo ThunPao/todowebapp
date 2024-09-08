@@ -59,7 +59,7 @@ export default function TaskEditerModal() {
         if (curState.success) {
           setIsLoading(false);
           toast.success(curState.message);
-          Swal.fire({ title: curState.message, timer: 3000, timerProgressBar: true,icon: "success" })
+          Swal.fire({ title: curState.message, timer: 3000, timerProgressBar: true, icon: "success" })
         } else {
           // Swal.fire({ title: curState.message})
           toast.error(curState.message);
@@ -153,6 +153,20 @@ export default function TaskEditerModal() {
                 className="input input-bordered w-full max-w-xs"
               />
             </label>
+
+            {/* Status */}
+            <label className="form-control w-full max-w-xs">
+              <div className="label">
+                <span className="label-text">Status</span>
+              </div>
+              <select name="curStatus" defaultValue={task.status} className="select select-bordered">
+                <option value="PENDING">ยังไม่ดำเนินการ</option>
+                <option value="IN_PROGRESS">กำลังดำเนินการ</option>
+                <option value="COMPLETED">ดำเนินการเสร็จสิ้น</option>
+              </select>
+            </label>
+
+
             <div className="py-4">
               {isLoading ? (
                 <button disabled className="btn w-full btn-primary">

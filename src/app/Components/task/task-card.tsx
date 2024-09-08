@@ -23,7 +23,6 @@ export default function TaskCardPage({ curTask }: TaskProps) {
     const { task, setTask } = useTask();
     const [isChanging, setChanging] = useState(false);
 
-
     const [modalElement, setModalElement] = useState<HTMLDialogElement | null>(null);
     useEffect(() => {
         const element = document.getElementById('taskEditmodal') as HTMLDialogElement;

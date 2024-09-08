@@ -8,6 +8,7 @@ export const defaultTask: TaskColla = {
   description: "",
   isChecked: false,
   due_date: new Date(),
+  status: "PENDING"
 };
 
 type TaskContextType = {
