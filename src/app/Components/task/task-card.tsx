@@ -98,21 +98,26 @@ export default function TaskCardPage({ curTask }: TaskProps) {
                 </div>
 
                 <div className='flex-1 gap-2 flex justify-between p-2'>
-                    <div className="badge badge-neutral py-3">
+                    <div className={`badge py-3 
+                        ${curTask.status === "PENDING" ? "badge-neutral" : ""}
+                        ${curTask.status === "IN_PROGRESS" ? "badge-secondary" : ""}
+                        ${curTask.status === "COMPLETED" ? "badge-success" : ""
+                        }`}>
                         {statusThai(curTask.status)}
                     </div>
+
                     <div>
 
-                    <button disabled={isChanging} onClick={openModal}>
-                        <Icon className="text-success" icon="tabler:pencil" width="1.5em" height="1.5em" />
-                    </button>
-                    {isLoading ? (
-                        <span className="loading loading-spinner loading-md"></span>
-                    ) : (
-                        <button disabled={isChanging} onClick={handleDelete} title="">
-                            <Icon className='text-error' icon="tabler:trash-filled" width="1.5em" height="1.5em" />
+                        <button disabled={isChanging} onClick={openModal}>
+                            <Icon className="text-success" icon="tabler:pencil" width="1.5em" height="1.5em" />
                         </button>
-                    )}
+                        {isLoading ? (
+                            <span className="loading loading-spinner loading-md"></span>
+                        ) : (
+                            <button disabled={isChanging} onClick={handleDelete} title="">
+                                <Icon className='text-error' icon="tabler:trash-filled" width="1.5em" height="1.5em" />
+                            </button>
+                        )}
                     </div>
 
                 </div>

@@ -35,6 +35,7 @@ export default function TaskModalButton({ children, isEdit, curTask }: Props) {
           title: curTask.title,
           description: curTask.description,
           due_date: curTask.due_date,
+          status: curTask.status
           // isChecked: task.isChecked
         })
       modalElement.showModal();

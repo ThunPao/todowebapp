@@ -23,7 +23,7 @@ export const fetchTasks = unstable_cache(() => {
 export async function fetchSearchTasks(term: string) {
     const status = term as Taskstatus || undefined;
     if (!status) {
-        return redirect(`/search`)
+        return redirect(`/`)
     }
     return await db.tasks.findMany(
         {
