@@ -90,7 +90,7 @@ export default function TaskCardPage({ curTask }: TaskProps) {
 
                     <div className="flex overflow-hidden gap-2">
                         <CheckTaskInputPage id={curTask.task_id} checkState={curTask.isChecked} />
-                        <div className={curTask.isChecked ? 'line-through' : '' + "w-52 lg:w-auto"}>
+                        <div className={curTask.isChecked ? 'line-through' : '' + "w-60 lg:w-40"}>
                             {curTask.title}
                         </div>
                     </div>
