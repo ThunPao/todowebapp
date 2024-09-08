@@ -155,7 +155,7 @@ export default function TaskEditerModal() {
             </label>
             <div className="py-4">
               {isLoading ? (
-                <button className="btn w-full btn-primary">
+                <button disabled className="btn w-full btn-primary">
                   <span className="loading loading-spinner"></span>
                   รอสักครู่
                 </button>
