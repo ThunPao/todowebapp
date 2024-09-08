@@ -83,22 +83,29 @@ export default function TaskCardPage({ curTask }: TaskProps) {
     return (
         <div className="card space-y-4 shadow-md  dark:bg-base-300 border-2 border-base-100 hover:border-base-200">
             <div className={isChanging ? "opacity-60" : "opacity-100"}>
-                <div className='p-2'>
+                <div className='p-2 space-y-3'>
                     <div className="flex gap-2 ">
                         <CheckTaskInputPage id={curTask.task_id} checkState={curTask.isChecked} />
                         <div className={curTask.isChecked ? 'line-through' : ''}>
                             {curTask.title}
                         </div>
                     </div>
+                    <div className="py-3">
+                        <small>{curTask.description}</small>
+                    </div>
 
-                    <small>{curTask.description}</small>
-                    {/* แสดงเวลาจาก raw เช่น 1970-01-01T00:00:00.000Z ลบ index หลังจาก 10 ออก และเปลี่ยนจาก - เป็น / จะได้เวลาเป็น YYYY/MM/DD */}
-                    <div className="text-error">Due Date {String(new Date(task.due_date).toISOString().slice(0, 10).replace(/-/g, '/'))}</div>
-
+                    <hr></hr>
+                    <div className="text-error">
+                        ถึงวันที่ {new Date(task.due_date).toLocaleDateString('th-TH', {
+                            day: '2-digit',
+                            month: 'short',
+                            year: '2-digit',
+                        })}
+                    </div>
                 </div>
 
                 <div className='flex-1 gap-2 flex justify-between p-2'>
-                    <div className={`badge py-3 
+                    <div className={`badge py-3 text-white badge-outline
                         ${curTask.status === "PENDING" ? "badge-neutral" : ""}
                         ${curTask.status === "IN_PROGRESS" ? "badge-secondary" : ""}
                         ${curTask.status === "COMPLETED" ? "badge-success" : ""
