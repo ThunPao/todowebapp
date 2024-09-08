@@ -6,12 +6,20 @@ import { redirect, useSearchParams } from "next/navigation";
 import { db } from '@/db';
 import { paths } from '@/paths';
 import { Tasks, Taskstatus } from "@prisma/client";
-export async function searchTodos(formData: FormData) {
+
+interface ResStatusChange {
+    success?: boolean;
+    message?: string;
+}
+
+
+export async function searchTodos(formState: ResStatusChange,formData: FormData): Promise<ResStatusChange> {
     const term = formData.get("status")
     if (typeof term !== 'string' || !term) {
         redirect('/');
     }
-    redirect(`/search?term=${term}`)
+    // redirect(`/search?term=${term}`)
+    return {success:true}
 }
 export async function editTodo(formState: CreateItemResult, formData: FormData): Promise<CreateItemResult> {
     try {
