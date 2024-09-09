@@ -1,5 +1,9 @@
 # Todo Management
 โปรเจค Todo Management เว็บไซต์สร้างรายการที่ต้องทำ
+##### Tech Stacks
+- NextJS v.14.2.7
+- Prisma
+- DaisyUI
 ## Features
 - สามารถเพิ่ม ลบ แก้ไข Task ต่างๆได้
 - แสดงรายการ Task ตามสถานะ หรือทั้งหมดได้
