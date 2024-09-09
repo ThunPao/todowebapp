@@ -37,13 +37,26 @@
 ![List Image](https://raw.githubusercontent.com/ThunPao/todowebapp/master/documentation/list.webp)
 
 ### Add Task
+![List Image](https://raw.githubusercontent.com/ThunPao/todowebapp/master/documentation/add.webp)
+
+#### Result:
+![List Image](https://raw.githubusercontent.com/ThunPao/todowebapp/master/documentation/add_after.webp)
 
 ### Edit Task
+![List Image](https://raw.githubusercontent.com/ThunPao/todowebapp/master/documentation/edit.webp)
+
+#### Result:
+![List Image](https://raw.githubusercontent.com/ThunPao/todowebapp/master/documentation/edit_after.webp)
+
 
 ### Toggle Complete Status Check
+![List Image](https://raw.githubusercontent.com/ThunPao/todowebapp/master/documentation/checktask.webp)
 
 ### Filter Task By Status
+![List Image](https://raw.githubusercontent.com/ThunPao/todowebapp/master/documentation/filters.webp)
 
 ### Delete Task
+![List Image](https://raw.githubusercontent.com/ThunPao/todowebapp/master/documentation/deltask.webp)
+
 
 
