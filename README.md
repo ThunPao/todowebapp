@@ -3,6 +3,7 @@
 ##### Tech Stacks
 - NextJS v.14.2.7
 - Prisma
+- MySql
 - DaisyUI
 ## Features
 - สามารถเพิ่ม ลบ แก้ไข Task ต่างๆได้
